@@ -1,7 +1,7 @@
 # https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/
 
 import numpy as np
-import torch
+#import torch
 import torchvision.transforms as transforms
 
 
