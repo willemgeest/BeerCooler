@@ -2,7 +2,6 @@
 
 import numpy as np
 import torch
-import cv2
 import torchvision.transforms as transforms
 
 
@@ -57,29 +56,6 @@ def find_bottles(image, model, detection_threshold, GPU=True):
         relevant_outputs = (pred_scores >= detection_threshold) & (bottles)
         return boxes[relevant_outputs], list(np.array(pred_classes)[relevant_outputs]), \
                outputs[0]['labels'][relevant_outputs], pred_scores[relevant_outputs]
-
-
-
-
-
-
-def draw_boxes(boxes, classes, image, print_classes=False):
-    # read the image with OpenCV
-   # image = cv2.cvtColor(np.asarray(image), cv2.COLOR_BGR2RGB)
-    image = np.asarray(image)
-    for i, box in enumerate(boxes):
-        color = [129.6077701, 202.91258334, 5.30873259]
-        cv2.rectangle(
-            image,
-            (int(box[0]), int(box[1])),
-            (int(box[2]), int(box[3])),
-            color, 2
-        )
-        if print_classes:
-            cv2.putText(image, classes[i], (int(box[0]), int(box[1] - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.8, color, 2,
-                        lineType=cv2.LINE_AA)
-    return image
-
 
 def get_obj_det_model():
     # download or load the model from disk
