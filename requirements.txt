@@ -1,7 +1,5 @@
 alabaster==0.7.12
 altair==4.1.0
-anaconda-client==1.7.2
-anaconda-project==0.8.3
 argh==0.26.2
 argon2-cffi @ file:///C:/ci/argon2-cffi_1596828585465/work
 asn1crypto @ file:///tmp/build/80754af9/asn1crypto_1596577642040/work
