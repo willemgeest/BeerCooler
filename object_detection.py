@@ -1,9 +1,8 @@
-# https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/
-
 import numpy as np
 import torch
 import torchvision
 
+# https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/
 
 def find_bottles(image, model, detection_threshold, GPU=True):
     coco_names = [
