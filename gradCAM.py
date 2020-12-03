@@ -3,7 +3,7 @@ import torch.nn as nn
 from torchvision.models import resnet50
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
+#import cv2
 from PIL import Image
 from torchvision import transforms
 import torchvision.transforms.functional as TF
