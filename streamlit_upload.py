@@ -4,7 +4,7 @@ from PIL import Image
 import get_image
 import object_detection
 import gradCAM
-import torchvision.transforms as transforms
+
 
 st.set_page_config(layout="wide")
 st.header('Beer bottle classification algorithm')

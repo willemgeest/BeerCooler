@@ -2,7 +2,7 @@
 
 import numpy as np
 #import torch
-import torchvision.transforms as transforms
+from torchvision import transforms
 
 
 def find_bottles(image, model, detection_threshold, GPU=True):
