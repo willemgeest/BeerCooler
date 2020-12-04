@@ -5,7 +5,6 @@ import get_image
 import object_detection
 import gradCAM
 
-
 st.set_page_config(layout="wide")
 st.header('Beer bottle classification algorithm')
 
@@ -20,8 +19,8 @@ if image is not None:
     image = Image.open(image)
     #image = get_image.get_image(IPv4_adress='http://192.168.178.108:8080', img_location= img_location)
     #image = get_image.get_image(IPv4_adress='http://192.168.2.7:8080', img_location= img_location)
-
-    #st.text('Picture captured')
+    st.markdown('**Original picture**')
+    st.image(image=get_image.resize_image(image))
 
     #object detection
     obj_det_model = object_detection.get_obj_det_model()
@@ -37,8 +36,7 @@ if image is not None:
     if n_beers > 0:
         img_heatmap, probabilities, label = gradCAM.heatmap(img_location='.\\latest_picture\\latest_uploaded_photo_scored.jpg',
                                                             heatmap_location='.\\latest_picture\\heatmap_uploaded.jpg')
-    st.markdown('**Original picture**')
-    st.image(image=get_image.resize_image(image))
+
 
     column1, column2, column3 = st.beta_columns(3)
 

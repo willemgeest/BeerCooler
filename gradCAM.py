@@ -3,12 +3,10 @@ import torch.nn as nn
 from torchvision.models import resnet50
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
 from PIL import Image
 from torchvision import transforms
-import torchvision.transforms.functional as TF
-import pickle
 from object_detection import get_classes
+
 
 class ResNet(nn.Module):
     def __init__(self):
@@ -67,8 +65,11 @@ class ResNet(nn.Module):
 
         return x
 
+img_location = './latest_picture/latest_camera_photo.jpg'
+heatmap_location = './latest_picture/heatmap.jpg'
 
-def heatmap(img_location, heatmap_location, class_int=None, opacity=0.8):
+
+def heatmap(img_location, heatmap_location, class_int=None, opacity=0.3):
     class_names = get_classes()
     # init the resnet
     resnet = ResNet()
@@ -128,20 +129,27 @@ def heatmap(img_location, heatmap_location, class_int=None, opacity=0.8):
     # normalize the heatmap
     heatmap /= torch.max(heatmap)
 
-    # draw the heatmap
-    #plt.matshow(heatmap.squeeze())
-
     # make the heatmap to be a numpy array
     heatmap = heatmap.numpy()
 
     # interpolate the heatmap
-    img = cv2.imread(img_location)
-    heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
-    heatmap = np.uint8(255 * heatmap)
-    heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
-    #
-    superimposed_img = (heatmap * opacity) + img
-    #save
-    cv2.imwrite(heatmap_location, superimposed_img)
+    img = Image.open(img_location)
+
+    heatmap = Image.fromarray(np.uint8(255 * heatmap)).resize((img.size[0], img.size[1]))
+
+    # Get the color map by name:
+    cm = plt.get_cmap('jet')
+
+    heatmap = np.asarray(heatmap)/255
+    # Apply the colormap like a function to any array:
+    heatmap = cm(heatmap)
+    heatmap = np.delete(heatmap, 3, 2)
+
+    heatmap = heatmap * 255
+    mix = (1.0 - 0.2) * np.asarray(img) + 0.9 * heatmap # (80% of original picture + 90% of heatmap )
+
+    mix = np.clip(mix, 0, 255).astype(np.uint8)
+    # save heatmap
+    Image.fromarray(mix).save(heatmap_location)
     return Image.open(heatmap_location), probabilities, class_names[pred.argmax()]
 
