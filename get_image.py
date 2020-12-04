@@ -9,14 +9,12 @@ def get_image(IPv4_adress = 'http://192.168.178.108:8080',
     image = image.rotate(270, expand=True)  # rotate image
     return image
 
-def resize_image(image, base_height=600):
-    hpercent = (base_height/float(image.size[1]))
-    wsize = int((float(image.size[0])*float(hpercent)))
-    image = image.resize((wsize,base_height), Image.ANTIALIAS)
+def resize_image(image, max_width = 500, max_heigth = 600):
+    w_factor = image.size[0] / max_width
+    h_factor = image.size[1] / max_heigth
+    if w_factor > h_factor:
+        image = image.resize((int(image.size[0] / w_factor), int(image.size[1] / w_factor)), Image.ANTIALIAS)
+    else:
+        image = image.resize((int(image.size[0] / h_factor), int(image.size[1] / h_factor)), Image.ANTIALIAS)
     return image
 
-def resize_image_width(image, base_width=300):
-    wpercent = (base_width/float(image.size[0]))
-    hsize = int((float(image.size[1])*float(wpercent)))
-    image = image.resize((base_width,hsize), Image.ANTIALIAS)
-    return image

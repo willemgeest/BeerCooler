@@ -10,7 +10,7 @@ from torch import nn
 import get_image
 import object_detection
 #import image_classification
-import gradCAM
+import beer_classification
 
 st.set_page_config(layout="wide")
 st.header('Beer bottle classification algorithm')
@@ -39,8 +39,8 @@ else:
 
 #heatmap
 if n_beers > 0:
-    img_heatmap, probabilities, label = gradCAM.heatmap(img_location='.\\latest_picture\\latest_camera_photo_scored.jpg',
-                                                        heatmap_location='.\\latest_picture\\heatmap.jpg')
+    img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_camera_photo_scored.jpg',
+                                                                    heatmap_location='.\\latest_picture\\heatmap.jpg')
 
 
 column1, column2, column3, column4 = st.beta_columns(4)
