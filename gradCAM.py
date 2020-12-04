@@ -8,6 +8,8 @@ from torchvision import transforms
 from object_detection import get_classes
 
 
+
+
 class ResNet(nn.Module):
     def __init__(self):
         super(ResNet, self).__init__()
@@ -15,7 +17,8 @@ class ResNet(nn.Module):
         class_names = get_classes()
         model_name = "beerchallenge_resnet50_7brands.pth"
 
-        # define the resnet152
+        # define the resnet 50
+        torch.hub.set_dir('.') # set cache dir to current folder (here is resnet model downloaded from
         self.resnet = resnet50(pretrained=True)
 
         num_ftrs = self.resnet.fc.in_features
