@@ -1,26 +1,18 @@
-import streamlit_camera as st
+import streamlit as st
 import pandas as pd
-import numpy as np
-import urllib.request
 from PIL import Image
-import os
-import torch
-from torchvision import models, transforms
-from torch import nn
 import get_image
 import object_detection
-#import image_classification
 import beer_classification
 
 st.set_page_config(layout="wide")
-st.header('Beer bottle classification algorithm')
+st.header("Willem's beer bottle classification algorithm")
 
 model_name = "beerchallenge_resnet50_7brands.pth"
 scored_image_location = 'latest_picture/latest_camera_photo_scored.jpg'
 class_names = object_detection.get_classes()
 img_location = 'latest_picture/latest_camera_photo.jpg'
 image = get_image.get_image(IPv4_adress='http://192.168.178.108:8080', img_location= img_location)
-#image = get_image.get_image(IPv4_adress='http://192.168.2.7:8080', img_location= img_location)
 
 st.text('Picture captured')
 
@@ -46,10 +38,10 @@ if n_beers > 0:
 column1, column2, column3, column4 = st.beta_columns(4)
 
 with column1:
-    st.image(image = get_image.resize_image(image), caption= 'Original picture')
+    st.image(image = get_image.resize_image(image, max_width=400, max_heigth=600), caption= 'Original picture')
 
 with column2:
-    st.image(get_image.resize_image(image_scored), caption= description_objdet)
+    st.image(get_image.resize_image(image_scored, max_width=400, max_heigth=600), caption= description_objdet)
 
 with column3:
     if n_beers>0:
@@ -58,14 +50,7 @@ with column3:
         df = pd.DataFrame([round(num*100, 1) for num in probabilities], class_names)
         df.columns = ['(%)']
         logo_location = 'logos/' + str(label) + '.png'
-        st.image(get_image.resize_image_width(Image.open(logo_location).convert('RGB')))
-
-        #if label == 'hertogjan':
-        #    st.image(get_image.resize_image_width(Image.open('logos/hertogjan.jpg')))
-        #if label == 'amstel':
-        #    st.image(get_image.resize_image_width(Image.open('logos/amstel.png')))
-        #if label == 'heineken':
-        #    st.image(get_image.resize_image_width(Image.open('logos/heineken.png')))
+        st.image(get_image.resize_image(Image.open(logo_location).convert('RGB'), max_width=400, max_heigth=600))
 
         st.text('Probabilities:')
         st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
@@ -74,5 +59,5 @@ with column3:
 
 with column4:
     if n_beers > 0:
-        st.image(get_image.resize_image(img_heatmap), caption='Heatmap')
+        st.image(get_image.resize_image(img_heatmap, max_width=400, max_heigth=600), caption='Heatmap')
 
