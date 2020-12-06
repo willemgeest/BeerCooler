@@ -11,6 +11,7 @@ from torch.optim import lr_scheduler
 import copy
 import random
 
+
 def split_trainval(folder_beers, fraction_train = 0.7):
     brands = os.listdir(folder_beers)
 
@@ -43,52 +44,54 @@ def split_trainval(folder_beers, fraction_train = 0.7):
 def crop_beers_to_folder(folder_beers,
                          folder_beers_cropped,
                          GPU = True):
-
+    # import data
     all_trainval_data = datasets.ImageFolder(root=folder_beers)
 
     # get folder structure in folder_beers
     folder_beers_str = [x[0].replace(folder_beers, '') for x in os.walk(folder_beers)]
 
-    # create structure (if it not already exists)
+    # create folder structure (if it not already exists)
     for i in folder_beers_str:
         if not os.path.exists(folder_beers_cropped + i):
             os.makedirs(folder_beers_cropped + i)
-    # todo edit reference
-    sys.path.append(r"C:\Users\wille\OneDrive\Documenten\Onedrive Rox\OneDrive\Willem\Python\Tutorials\Streamlit\object_detection.py")
 
+    # load object detection model
     obj_det_model = object_detection.get_obj_det_model()
     obj_det_model.eval()
     if GPU:
         obj_det_model.cuda()
 
+    #save results of cropped files in df
     cropped_results = pd.DataFrame(columns=['i', 'file', 'n_boxes'])
 
+    # crop all images
     for i in range(len(all_trainval_data)):
         try:
             image = all_trainval_data[i][0]
             boxes, classes, labels, preds = object_detection.find_bottles(image=image, model=obj_det_model,
                                                                              detection_threshold=.8, GPU=GPU)
-
+            # if there are multiple boxes (beers), make 1 large box
             if len(boxes) > 0:
                 x_start = min([x[0] for x in boxes])
                 y_start = min([x[1] for x in boxes])
                 x_end = max([x[2] for x in boxes])
                 y_end = max([x[3] for x in boxes])
 
+                # crop image
                 image_cropped = image.crop((x_start, y_start, x_end, y_end))
-                #image_cropped.show()
 
+                # save cropped image
                 new_location = folder_beers_cropped + all_trainval_data.samples[i][0].replace(folder_beers, '')
                 image_cropped.save(new_location)
-
+            # add to df
             cropped_results = cropped_results.append({'i': i, 'file': all_trainval_data.samples[i][0],
                                                       'n_boxes': len(boxes)}, ignore_index=True)
-        #except:
-        #    print('Failure at ' + str(i))
         finally:
             print('')
-        if i%10==0:
-            print(str(i) + ' / ' +str(len(all_trainval_data)) + ' (' + str(round(i/len(all_trainval_data)*100)) + '%)')
+
+        # print progress each 25 images
+        if i%25==0:
+            print(str(i) + ' / ' + str(len(all_trainval_data)) + ' (' + str(round(i/len(all_trainval_data)*100)) + '%)')
     return cropped_results
 
 def train_beermodel(folder_beers,
@@ -124,13 +127,13 @@ def train_beermodel(folder_beers,
     dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
                                                   shuffle=True, num_workers=4)
                    for x in ['train', 'val']}
-
+    #
     dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
     class_names = image_datasets['train'].classes
 
     model_ft.fc = nn.Linear(num_ftrs, len(class_names))  # determine final (fully connected) layer
 
-    # torch.cuda.empty_cache() # empty cache before
+    # torch.cuda.empty_cache() # empty cache
     model_ft = model_ft.to(device)
 
     criterion = nn.CrossEntropyLoss()
@@ -208,15 +211,11 @@ def train_beermodel(folder_beers,
     torch.save(model_ft.state_dict(), model_location)
     #return model_ft
 
-# split_trainval(beers_folder=r'D:\Datasets\beers\original')
+# split_trainval(beers_folder='data\\original')
 
-# crop_beers_to_folder(folder_beers=r'D:\Datasets\beers\original', folder_beers_cropped=r'D:\Datasets\beers\detected', GPU=True)
+# crop_beers_to_folder(folder_beers='data\\original', folder_beers_cropped='data\\detected', GPU=True)
 
-# train_beermodel(folder_beers=r'D:\Datasets\beers\detected', model_location='./beerchallenge_resnet50_7brands.pth', num_epochs=10, GPU=True)
-
-#10 epochs
-# 1091 beer detected train images; val acc 0.8604
-#  152 beer detected train images; val acc 0.7729
+# train_beermodel(folder_beers='data\\detected', model_location='beerchallenge_resnet50_7brands.pth', num_epochs=10, GPU=True)
 
 
 

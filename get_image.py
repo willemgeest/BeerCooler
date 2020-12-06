@@ -1,8 +1,8 @@
 import urllib.request
 from PIL import Image
 
-def get_image(IPv4_adress = 'http://192.168.178.108:8080',
-              img_location = 'latest_picture/latest_camera_photo.jpg'):
+def get_image_IPcamera(IPv4_adress,
+                       img_location = 'latest_picture/latest_camera_photo.jpg'):
     picture_url = IPv4_adress + '/photo.jpg'  # get link of picture
     urllib.request.urlretrieve(picture_url, img_location)  # download picture to location
     image = Image.open(img_location)  # open image

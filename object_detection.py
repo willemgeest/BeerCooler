@@ -6,7 +6,28 @@ import torchvision.transforms as transforms
 import torchvision
 
 
-def find_bottles(image, model, detection_threshold, GPU=True):
+def get_obj_det_model():
+    # download or load the model from disk
+    return torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
+
+def crop_beers(image, model, threshold, GPU=True):
+    #  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    boxes, classes, labels, preds = find_bottles(image, model, detection_threshold=threshold, GPU=GPU)
+    if len(boxes) > 0:
+        image_cropped = image.crop(tuple(boxes[0]))  # crop image: select only relevant part of pic
+        # todo correct als er 2 boxes zijn (nu pak degene met hoogste pred, boxes is al gesorteerd op pred)
+    else:
+        image_cropped = image
+    # image = draw_boxes(boxes, classes, labels, image)
+    return image_cropped, len(boxes)
+
+def get_classes():
+    return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
+
+
+
+
+def find_bottles(image, model, detection_threshold=0.8, GPU=True):
     coco_names = [
         '__background__', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
         'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'N/A', 'stop sign',
@@ -28,9 +49,6 @@ def find_bottles(image, model, detection_threshold, GPU=True):
     # define the torchvision image transforms
     transform = transforms.Compose([
         transforms.ToTensor()])
-    #transform = transforms.Compose([
-    #    transforms.ToTensor(),
-    #    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
     # transform the image to tensor
     image = transform(image)
@@ -45,6 +63,7 @@ def find_bottles(image, model, detection_threshold, GPU=True):
     pred_scores = outputs[0]['scores'].detach().cpu().numpy()
     # get all the predicted bounding boxes
     pred_bboxes = outputs[0]['boxes'].detach().cpu().numpy()
+    # which labels are bottles?
     bottles = []
     for i in pred_classes:
         bottles.append(i == 'bottle')
@@ -52,27 +71,12 @@ def find_bottles(image, model, detection_threshold, GPU=True):
 
     boxes = pred_bboxes.astype(np.int32)
 
-    if len(pred_scores)>0:
-        # get boxes above the threshold score
-        relevant_outputs = (pred_scores >= detection_threshold) & (bottles)
-        return boxes[relevant_outputs], list(np.array(pred_classes)[relevant_outputs]), \
-               outputs[0]['labels'][relevant_outputs], pred_scores[relevant_outputs]
+    # get boxes above the threshold score & which are bottles
+    relevant_outputs = (pred_scores >= detection_threshold) & bottles
 
-def get_obj_det_model():
-    # download or load the model from disk
-    return torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
-
-def crop_beers(image, model, threshold, GPU=True):
-    #  device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    boxes, classes, labels, preds = find_bottles(image, model, detection_threshold=threshold, GPU=GPU)
-    if len(boxes) > 0:
-        image_cropped = image.crop(tuple(boxes[0]))  # crop image: select only relevant part of pic
-        # todo correct als er 2 boxes zijn (nu pak degene met hoogste pred, boxes is al gesorteerd op pred)
-    else:
-        image_cropped = image
-    # image = draw_boxes(boxes, classes, labels, image)
-    return image_cropped, len(boxes)
-
-def get_classes():
-    return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
+    if sum(relevant_outputs) > 0:
+        return boxes[relevant_outputs], \
+               list(np.array(pred_classes)[relevant_outputs]), \
+               outputs[0]['labels'][relevant_outputs], \
+               pred_scores[relevant_outputs]
 

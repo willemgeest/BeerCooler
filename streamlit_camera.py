@@ -4,6 +4,7 @@ from PIL import Image
 import get_image
 import object_detection
 import beer_classification
+import sys
 
 st.set_page_config(layout="wide")
 st.header("Willem's beer bottle classification algorithm")
@@ -12,11 +13,11 @@ model_name = "beerchallenge_resnet50_7brands.pth"
 scored_image_location = 'latest_picture/latest_camera_photo_scored.jpg'
 class_names = object_detection.get_classes()
 img_location = 'latest_picture/latest_camera_photo.jpg'
-image = get_image.get_image(IPv4_adress='http://192.168.178.108:8080', img_location= img_location)
+image = get_image.get_image_IPcamera(IPv4_adress=sys.argv[1], img_location= img_location)
 
 st.text('Picture captured')
 
-#object detection
+# object detection
 obj_det_model = object_detection.get_obj_det_model()
 try:
     image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=True)
@@ -29,12 +30,12 @@ if n_beers > 0:
 else:
     description_objdet = 'No beer bottle detected'
 
-#heatmap
+# heatmap
 if n_beers > 0:
     img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_camera_photo_scored.jpg',
                                                                     heatmap_location='.\\latest_picture\\heatmap.jpg')
 
-
+# define 4 columns
 column1, column2, column3, column4 = st.beta_columns(4)
 
 with column1:

@@ -8,8 +8,6 @@ from torchvision import transforms
 from object_detection import get_classes
 
 
-
-
 class ResNet(nn.Module):
     def __init__(self):
         super(ResNet, self).__init__()
@@ -18,9 +16,7 @@ class ResNet(nn.Module):
         model_name = "beerchallenge_resnet50_7brands.pth"
 
         # define the resnet 50
-        # torch.hub.set_dir('.') # set cache dir to current folder (here is resnet model downloaded from
         self.resnet = resnet50(pretrained=True)
-
         num_ftrs = self.resnet.fc.in_features
         self.resnet.fc = nn.Linear(num_ftrs, len(class_names))
         self.resnet.load_state_dict(torch.load(model_name))
@@ -68,11 +64,8 @@ class ResNet(nn.Module):
 
         return x
 
-img_location = './latest_picture/latest_camera_photo.jpg'
-heatmap_location = './latest_picture/heatmap.jpg'
-
-
-def beer_classification(img_location, heatmap_location, class_int=None, opacity=0.3):
+def beer_classification(img_location, heatmap_location, class_int=None):
+    # get classes
     class_names = get_classes()
     # init the resnet
     resnet = ResNet()
@@ -81,30 +74,25 @@ def beer_classification(img_location, heatmap_location, class_int=None, opacity=
 
     #open image
     img = Image.open(img_location)
-    #img = TF.to_tensor(img)
-    #img.unsqueeze_(0)
 
     test_transforms = transforms.Compose([
-        # transforms.RandomResizedCrop(224), #doordat image wordt verkleint tot 224x224 image (op random plek), is uitput steeds anders
-        #transforms.CenterCrop(224),  # pak altijd het center van de image
-        # transforms.RandomHorizontalFlip(), #ook dit kan (kleine) impact hebben op de output
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406],
                              [0.229, 0.224, 0.225])])  # normalize images for R, G, B (both mean and SD)
 
     img = test_transforms(img)
     # add 1 dimension to tensor
-    img=img.unsqueeze(0)
+    img = img.unsqueeze(0)
     # forward pass
     pred = resnet(img)
 
-    #pred.argmax(dim=1)  # prints tensor([2])
-    sm = torch.nn.Softmax(dim=1)  # use softmax to convert tensor values to probs (dim = do columns (0) or rows (1) have to sum up to 1?)
+    # tranfors tensors with results to probabilities
+    sm = torch.nn.Softmax(dim=1)  # use softmax to convert tensor values to probs (dim = columns (0) or rows (1) have to sum up to 1?)
     probabilities = sm(pred)
 
     # get the gradient of the output with respect to the parameters of the model
     if class_int==None:
-        pred[:, pred.argmax()].backward()
+        pred[:, pred.argmax()].backward() # heatmap of class with highest prob
     else:
         pred[:, class_int].backward()
 
@@ -126,7 +114,6 @@ def beer_classification(img_location, heatmap_location, class_int=None, opacity=
     heatmap = torch.mean(activations, dim=1).squeeze()
 
     # relu on top of the heatmap
-    # expression (2) in https://arxiv.org/pdf/1610.02391.pdf
     heatmap = np.maximum(heatmap, 0)
 
     # normalize the heatmap

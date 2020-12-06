@@ -34,7 +34,7 @@ if image is not None:
 
         img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_uploaded_photo_scored.jpg',
                                                                                     heatmap_location='.\\latest_picture\\heatmap_uploaded.jpg')
-
+    # define 3 columns
     column1, column2, column3 = st.beta_columns(3)
 
     with column1:
