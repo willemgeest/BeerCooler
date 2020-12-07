@@ -11,7 +11,15 @@ To let the barrel know what's in it, I've placed a Raspberri Pi with camera on t
 ## Structure
 
 The repo consists of the following files:
-- 
+- streamlit_camera.py (a script that let you use your phone camera to detect and classify beers)
+- streamlit_upload.py (same magic as above, but with an upload button to upload images from your pc)
+- beerchallenge_resnet50_7brands.pth (the beer brand classification model)
+- get_image.py (some functions to get the images from the camera)
+- object_detection.py (some beer detection related functions)
+- beer_classification.py (some beer brand classification related functions)
+- train_beermodel.py (some functions to train your own beer model, not required for running the scripts, but it can be handy of you want to create your own beer model or want to add other beer brands)
+- logo folder (consists the logo's of the brands, just for visualization)
+- checkpoints (consists some other files, not really relevant for now)
 
 scripts uitleg
 wat te doen:
