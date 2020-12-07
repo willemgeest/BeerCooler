@@ -57,10 +57,15 @@ The classification model was trained on images of beer bottles that I've downloa
 
 .
 +--data
+
 |--original
+
 |     +--amstel
+
 |        +--filename_amstel_image1.jpg (etc)
+
 |     +--heineken (or any other beer brand)
+
 |        +--filename_heineken_image1.jpg (etc)
 
 I've created some functions to make the training as easy as possible, you can find them in train_beermodel.py. First split the dataset in a training and a validation dataset by using the *split_trainval* function. This function just creates a new folder structure where two new folders are created; train and val. After using this function, the folder structure should be as followed (ofcourse, you can do the restructuring of the folders by hand, too):
