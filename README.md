@@ -1,6 +1,6 @@
 # BeerCooler
 
-As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible to (an ambilight based on the beer brand, temperature checks, etc.).
+As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible to (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science techniques. 
 
 <picture of barrel>
 
@@ -34,4 +34,12 @@ Before diving into the details, let me explain how you can get started.
 
 ## How does it work?
 
+I want to highlight a few elements; the detection of the beer bottle, the classification of the beer brand and how to train your own beer classification model?
+
 ### Beer detection
+
+### Beer classification
+
+### How to train your own model?
+
+## Next steps
