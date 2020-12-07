@@ -100,4 +100,6 @@ Now we've downloaded the images and put them in the right folder structure, the 
 ```
 The final step is to actually train the model based on the cropped beer images. I've used a pretrained Resnet50 architecture that can be downloaded via PyTorch (modes.Resnet50) You can use the *train_beermodel* function. Ofcourse, there are many (many) parameters that can be adjusted in the architecture (learning rate, transformations, weight decay, etc.), but for now, I not dove into details here and just wanted to get it running ASAP. But I'm pretty sure that the accuracy of the model can be improved if you spend some time here. 
 
-## Next steps
+## Comments or tips?
+
+If you have comments, tips, or if you used or further developed this code, please let me know! And if you find this beer analysis a nobel cause and you want to contribute), please contact me, too! ;-)
