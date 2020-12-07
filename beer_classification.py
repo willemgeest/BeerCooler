@@ -5,8 +5,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms
-from object_detection import get_classes
 
+def get_classes():
+    return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
 class ResNet(nn.Module):
     def __init__(self):
@@ -142,4 +143,5 @@ def beer_classification(img_location, heatmap_location, class_int=None):
     # save heatmap
     Image.fromarray(mix).save(heatmap_location)
     return Image.open(heatmap_location), probabilities, class_names[pred.argmax()]
+
 

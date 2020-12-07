@@ -3,7 +3,6 @@ import torch
 import torchvision.transforms as transforms
 import torchvision
 
-
 def get_obj_det_model():
     # download or load the model from disk
     return torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
@@ -18,11 +17,6 @@ def crop_beers(image, model, threshold, GPU=True):
         image_cropped = image
     # image = draw_boxes(boxes, classes, labels, image)
     return image_cropped, len(boxes)
-
-def get_classes():
-    return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
-
-
 
 
 def find_bottles(image, model, detection_threshold=0.8, GPU=True):
