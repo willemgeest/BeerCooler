@@ -79,4 +79,6 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
                list(np.array(pred_classes)[relevant_outputs]), \
                outputs[0]['labels'][relevant_outputs], \
                pred_scores[relevant_outputs]
+    else:
+        return[[], [], [], []]
 
