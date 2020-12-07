@@ -13,6 +13,7 @@ model_name = "beerchallenge_resnet50_7brands.pth"
 scored_image_location = 'latest_picture/latest_camera_photo_scored.jpg'
 class_names = object_detection.get_classes()
 img_location = 'latest_picture/latest_camera_photo.jpg'
+
 image = get_image.get_image_IPcamera(IPv4_adress=sys.argv[1], img_location= img_location)
 
 st.text('Picture captured')
