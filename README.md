@@ -20,6 +20,7 @@ The repo consists of the following files:
 - train_beermodel.py (some functions to train your own beer model, not required for running the app, but it can be handy of you want to create your own beer model or want to add other beer brands)
 - requirements.txt (where the required packages can be found)
 - data folder (images where model was trained upon, not required for running the app)
+- latest_picture folder (where the latest processed picture (+ results) is stored)
 - logo folder (consists the logo's of the brands, just for visualization)
 - checkpoints (consists some other files, not really relevant for now)
 
@@ -45,9 +46,14 @@ For the detection of beer bottles, I've used a pretrained Faster-RCNN Deep Learn
 
 ### Beer classification
 
+The beer classification model is based on a pretrained Resnet50 architecture, that I retrained on (a couple hundred of) Google Image pictures of beer barrels. See below ('How to train your own model?') for more information how I trained the model. 
+
+The *beer_classification* function does two things: identifying the beer brand and producing a heatmap. This heatmap will help you understand how the model came to its conclusion; which pixels 
 
 
 ### Streamlit
+
+As I said, the deployment of the code is being done via Streamlit. This is a great way of making your Python code accessible for others. With just a few lines of code, you can deploy your models in an interactive app. If you don't know Streamlit, you should definitely check out [their site](https://www.streamlit.io/).
 
 ### How to train your own model?
 
@@ -57,18 +63,18 @@ The classification model was trained on images of beer bottles that I've downloa
 ```
 .
 +--data
-|--original
-|     +--amstel
-|        +--filename_amstel_image1.jpg (etc)
-|     +--heineken (or any other beer brand)
-|        +--filename_heineken_image1.jpg (etc)
+|  +--original
+|       +--amstel
+|          +--filename_amstel_image1.jpg (etc)
+|       +--heineken (or any other beer brand)
+|          +--filename_heineken_image1.jpg (etc)
 ```
 
 I've created some functions to make the training as easy as possible, you can find them in train_beermodel.py. First split the dataset in a training and a validation dataset by using the *split_trainval* function. This function just creates a new folder structure where two new folders are created; train and val. After using this function, the folder structure should be as followed (ofcourse, you can do the restructuring of the folders by hand, too):
 ```
 .
 +--data
-|--original
+|  +--original
 |     +--train
 |        +--amstel
 |        +--heineken (or any other beer brand)
@@ -82,8 +88,8 @@ Now we've downloaded the images and put them in the right folder structure, the 
 ```
 .
 +--data
-|--original
-|--dectected
+|  +--original
+|  +--dectected
 |     +--train
 |     +--val
 ```
