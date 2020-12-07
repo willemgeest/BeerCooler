@@ -1,6 +1,6 @@
 # BeerCooler
 
-As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible to (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science techniques. 
+As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible to (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science (Deep Learning) techniques. 
 
 <picture of barrel>
 
@@ -11,7 +11,7 @@ To let the barrel know what's in it, I've placed a Raspberri Pi with camera on t
 ## Structure
 
 The repo consists of the following files:
-- streamlit_camera.py (a script that let you use your phone camera to detect and classify beers)
+- streamlit_camera.py (a script that let you use your phone camera as input for detecting and classifying beers)
 - streamlit_upload.py (same magic as above, but with an upload button to upload images from your pc)
 - beerchallenge_resnet50_7brands.pth (the beer brand classification model)
 - get_image.py (some functions to get the images from the camera)
@@ -34,11 +34,19 @@ Before diving into the details, let me explain how you can get started.
 
 ## How does it work?
 
-I want to highlight a few elements; the detection of the beer bottle, the classification of the beer brand and how to train your own beer classification model?
+All code is written in Python. I've used PyTorch for creating and adjusting the Neural Networks for the object detection, image classification and the GradCAM (heatmaps). To visualise this in an app, I've used Streamlit, which is a fantastic way to create apps with just a few lines of Python code. 
+
+I want to highlight a few elements; the detection of the beer bottle, the classification of the beer brand, Streamlit and how to train your own beer classification model?
 
 ### Beer detection
 
+For the detection of beer bottles, I've used a pretrained Faster-RCNN Deep Learning network, which is trained to detect almost 80 different objects (including bottles). Because this was already available, I just reused it to get started very quickly. Check out [this](https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/) link for more background info about the model. 
+
+
+
 ### Beer classification
+
+### Streamlit
 
 ### How to train your own model?
 
