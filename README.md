@@ -18,12 +18,19 @@ The repo consists of the following files:
 - object_detection.py (some beer detection related functions)
 - beer_classification.py (some beer brand classification related functions)
 - train_beermodel.py (some functions to train your own beer model, not required for running the scripts, but it can be handy of you want to create your own beer model or want to add other beer brands)
+- requirements.txt (where the required packages can be found)
 - logo folder (consists the logo's of the brands, just for visualization)
 - checkpoints (consists some other files, not really relevant for now)
 
-scripts uitleg
-wat te doen:
-- clone repo
-- download IP camera
-- check IP adres waarop camera gestreamd wordt
-- run streamlit_camera.py script met IP adres
+## How to get started
+
+Before diving into the details, let me explain how you can get started.
+
+- Clone this repo, create a virtual environment and install dependencies
+- Download the IP Webcam app on your phone (tested on Android). If active, this app streams your camera to your wifi network, so that's it becomes accessible for other devices within your wifi network. 
+- In the IP Webcam app, press 'Start server' to start streaming your phone camera. Write down the (http, not https) IPv4 address (http://xxx.xxx.xxx.xxx:xxxx). 
+- In cmd, activate your virtual environment, move to the correct folder and type 'streamlit run streamlit_camera.py http://xxx.xxx.xxx.xxx:xxxx'
+
+Now, a web page should pop up with the app. 
+
+## How does it work?
