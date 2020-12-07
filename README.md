@@ -6,7 +6,7 @@ As a data scientist, it is sometimes very hard to explain clearly to non-data-mi
 
 To let the barrel know what's in it, I've placed a Raspberri Pi with camera on the barrel and wrote some computer vision scripts to process the images. I wanted to make the scripts reproducable, so that you can use it to discuss the possibilities of data science/AI with your friends, too. And because I don't expect you to build a beer-booling whisky barrel yourselves, I tried to make it a little more accessible. Therefore, I created some scripts that do the magic (beer bottle detection, beer brand classification) and can easily be combined with your own phone camera.
 
-![Screenshot](checkpoints/beerclassification_output.jpeg)
+![Example output](checkpoints/beerclassification_output.JPG)
 
 ## Structure
 
@@ -48,7 +48,8 @@ For the detection of beer bottles, I've used a pretrained Faster-RCNN Deep Learn
 
 The beer classification model is based on a pretrained Resnet50 architecture, that I retrained on (a couple hundred of) Google Image pictures of beer barrels. See below ('How to train your own model?') for more information how I trained the model. 
 
-The *beer_classification* function does two things: identifying the beer brand and producing a heatmap. This heatmap will help you understand how the model came to its conclusion; which pixels 
+The *beer_classification* function does two things: identifying the beer brand and producing a (GradCAM) heatmap. This heatmap will help you understand how the model came to its conclusion; which pixels make that the result is as it is? For example, in the picture below you see that the logos of Hertog Jan are coloured red and yellow; this means that these pixels have high impact ons the prediction. The other parts of the image are blue, which indicate that they have limited impact on the outcome. For more information about GradCAM, check out [this page](https://medium.com/@stepanulyanin/implementing-grad-cam-in-pytorch-ea0937c31e82).
+![Heatmap example](checkpoints/heatmap_example.jpg)
 
 
 ### Streamlit
