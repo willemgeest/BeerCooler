@@ -70,7 +70,7 @@ def crop_beers_to_folder(folder_beers,
             image = all_trainval_data[i][0]
             boxes, classes, labels, preds = object_detection.find_bottles(image=image, model=obj_det_model,
                                                                              detection_threshold=.8, GPU=GPU)
-            # if there are multiple boxes (beers), make 1 large box
+            # if there are multiple boxes (beers), make 1 large box. If there is only 1 beer, this doesn't change anything
             if len(boxes) > 0:
                 x_start = min([x[0] for x in boxes])
                 y_start = min([x[1] for x in boxes])
