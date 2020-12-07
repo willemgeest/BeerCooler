@@ -1,10 +1,10 @@
 # BeerCooler
 
-As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible to (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science (Deep Learning) techniques. 
+As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm actually doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible too (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science (Deep Learning) techniques. 
 
 <picture of barrel>
 
-To let the barrel know what's in it, I've placed a Raspberri Pi with camera on the barrel and wrote some computer vision scripts to process the images. I wanted to make the scripts reproducable, so that you can use it to discuss the possibilities of data science/AI with your friends, too. And because I don't expect you to build a beer-booling whisky barrel yourselves, I tried to make it a little more accessible. Therefore, I created some scripts that do the magic (beer bottle detection, beer brand classification) and can easily be combined with your own phone camera.
+To let the barrel know what's in it, I've placed a Raspberri Pi with camera on the barrel and wrote some computer vision scripts to process the images. I wanted the scripts to be reusable, so that you can use it to discuss the possibilities of data science/AI with your friends, too. And because I don't expect you to build a beer-booling whisky barrel yourselves, I tried to make it a little more accessible. Therefore, I created some scripts that do the magic (beer bottle detection, beer brand classification) and can easily be combined with your own phone camera.
 
 ![Example output](checkpoints/beerclassification_output.JPG)
 
@@ -44,17 +44,21 @@ I want to highlight a few elements; the detection of the beer bottle, the classi
 
 For the detection of beer bottles, I've used a pretrained Faster-RCNN Deep Learning network, which is trained to detect almost 80 different objects (including bottles). Because this was already available, I just reused it to get started very quickly. Check out [this link](https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/) for some extra info about the model. Because I'm only interested in bottles, I've made some small adjustments to make sure that other objects are ignored. These can be found in object_detection.py.
 
+If an image consists two (or more) beer bottles objects, the object with the highest probability (of being a bottle, according to the object detection model) is processed. 
+
+![Object detection example](checkpoints/object_detection_example.jpg)
+
 ### Beer classification
 
 The beer classification model is based on a pretrained Resnet50 architecture, that I retrained on (a couple hundred of) Google Image pictures of beer barrels. See below ('How to train your own model?') for more information how I trained the model. 
 
 The *beer_classification* function does two things: identifying the beer brand and producing a (GradCAM) heatmap. This heatmap will help you understand how the model came to its conclusion; which pixels make that the result is as it is? For example, in the picture below you see that the logos of Hertog Jan are coloured red and yellow; this means that these pixels have high impact ons the prediction. The other parts of the image are blue, which indicate that they have limited impact on the outcome. For more information about GradCAM, check out [this page](https://medium.com/@stepanulyanin/implementing-grad-cam-in-pytorch-ea0937c31e82).
-![Heatmap example](checkpoints/heatmap_example.jpg)
 
+![Heatmap example](checkpoints/heatmap_example.jpg)
 
 ### Streamlit
 
-As I said, the deployment of the code is being done via Streamlit. This is a great way of making your Python code accessible for others. With just a few lines of code, you can deploy your models in an interactive app. If you don't know Streamlit, you should definitely check out [their site](https://www.streamlit.io/).
+As I said, the deployment of the code is being done via Streamlit. This is a great way of making your Python code accessible for others. With just a few lines of code, you can deploy your models in an interactive app. If you don't know Streamlit, you should definitely check out [their site](https://www.streamlit.io/). What more to say, just get started!
 
 ### How to train your own model?
 
@@ -96,4 +100,6 @@ Now we've downloaded the images and put them in the right folder structure, the 
 ```
 The final step is to actually train the model based on the cropped beer images. I've used a pretrained Resnet50 architecture that can be downloaded via PyTorch (modes.Resnet50) You can use the *train_beermodel* function. Ofcourse, there are many (many) parameters that can be adjusted in the architecture (learning rate, transformations, weight decay, etc.), but for now, I not dove into details here and just wanted to get it running ASAP. But I'm pretty sure that the accuracy of the model can be improved if you spend some time here. 
 
-## Next steps
+## Comments or tips?
+
+If you have comments, tips, or if you used or further developed this code, please let me know! And if you find this beer analysis a nobel cause and you want to contribute), please contact me, too! ;-)
