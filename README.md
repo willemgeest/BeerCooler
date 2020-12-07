@@ -19,7 +19,6 @@ The repo consists of the following files:
 - beer_classification.py (some beer brand classification related functions)
 - train_beermodel.py (some functions to train your own beer model, not required for running the app, but it can be handy of you want to create your own beer model or want to add other beer brands)
 - requirements.txt (where the required packages can be found)
-- data folder (images where model was trained upon, not required for running the app)
 - latest_picture folder (where the latest processed picture (+ results) is stored)
 - logo folder (consists the logo's of the brands, just for visualization)
 - checkpoints (consists some other files, not really relevant for now)
