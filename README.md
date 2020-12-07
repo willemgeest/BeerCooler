@@ -6,7 +6,7 @@ As a data scientist, it is sometimes very hard to explain clearly to non-data-mi
 
 To let the barrel know what's in it, I've placed a Raspberri Pi with camera on the barrel and wrote some computer vision scripts to process the images. I wanted to make the scripts reproducable, so that you can use it to discuss the possibilities of data science/AI with your friends, too. And because I don't expect you to build a beer-booling whisky barrel yourselves, I tried to make it a little more accessible. Therefore, I created some scripts that do the magic (beer bottle detection, beer brand classification) and can easily be combined with your own phone camera.
 
-<streamlit output>
+![Screenshot](checkpoints/beerclassification_output.jpeg)
 
 ## Structure
 
