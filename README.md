@@ -71,15 +71,11 @@ I've created some functions to make the training as easy as possible, you can fi
 |--original
 |     +--train
 |        +--amstel
-|            +--filename_amstel_image1.jpg (etc)
 |        +--heineken (or any other beer brand)
-|           +--filename_heineken_image1.jpg (etc)
 |        (etc)
 |     +--val
 |        +--amstel
-|            +--filename_amstel_image1.jpg (etc)
 |        +--heineken (or any other beer brand)
-|           +--filename_heineken_image1.jpg (etc)
 |        (etc)
 ```
 Now we've downloaded the images and put them in the right folder structure, the 2nd step is to crop the images, such that only the beer bottles are on the images. This is helpful, because the background (and other irrelevant objects) on the image can be misleading for the image classification model. To do this, I've created the function *crop_beers_to_folder*. This works ofcourse by using the same object detection model as described above, but with some small adjustments. One of the adjustments is that if there are multiple bottles on 1 image, the function crops the image so that all bottles are on the image. The results can be written in a new folder, in my case this was 'detected'. The folder structure should now be:
