@@ -65,7 +65,7 @@ The classification model was trained on images of beer bottles that I've downloa
 ```
 
 I've created some functions to make the training as easy as possible, you can find them in train_beermodel.py. First split the dataset in a training and a validation dataset by using the *split_trainval* function. This function just creates a new folder structure where two new folders are created; train and val. After using this function, the folder structure should be as followed (ofcourse, you can do the restructuring of the folders by hand, too):
-
+```
 .
 +--data
 |--original
@@ -81,15 +81,16 @@ I've created some functions to make the training as easy as possible, you can fi
 |        +--heineken (or any other beer brand)
 |           +--filename_heineken_image1.jpg (etc)
 |        (etc)
-
+```
 Now we've downloaded the images and put them in the right folder structure, the 2nd step is to crop the images, such that only the beer bottles are on the images. This is helpful, because the background (and other irrelevant objects) on the image can be misleading for the image classification model. To do this, I've created the function *crop_beers_to_folder*. This works ofcourse by using the same object detection model as described above, but with some small adjustments. One of the adjustments is that if there are multiple bottles on 1 image, the function crops the image so that all bottles are on the image. The results can be written in a new folder, in my case this was 'detected'. The folder structure should now be:
+```
 .
 +--data
 |--original
 |--dectected
 |     +--train
 |     +--val
-
+```
 The final step is to actually train the model based on the cropped beer images. I've used a pretrained Resnet50 architecture that can be downloaded via PyTorch (modes.Resnet50) You can use the *train_beermodel* function. Ofcourse, there are many (many) parameters that can be adjusted in the architecture (learning rate, transformations, weight decay, etc.), but for now, I not dove into details here and just wanted to get it running ASAP. But I'm pretty sure that the accuracy of the model can be improved if you spend some time here. 
 
 ## Next steps
