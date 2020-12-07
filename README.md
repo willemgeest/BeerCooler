@@ -44,6 +44,9 @@ I want to highlight a few elements; the detection of the beer bottle, the classi
 
 For the detection of beer bottles, I've used a pretrained Faster-RCNN Deep Learning network, which is trained to detect almost 80 different objects (including bottles). Because this was already available, I just reused it to get started very quickly. Check out [this link](https://debuggercafe.com/faster-rcnn-object-detection-with-pytorch/) for some extra info about the model. Because I'm only interested in bottles, I've made some small adjustments to make sure that other objects are ignored. These can be found in object_detection.py.
 
+If an image consists two (or more) beer bottles objects, the object with the highest probability (of being a bottle, according to the object detection model) is processed. 
+![Object detection example](checkpoints/object_detection_example.jpg)
+
 ### Beer classification
 
 The beer classification model is based on a pretrained Resnet50 architecture, that I retrained on (a couple hundred of) Google Image pictures of beer barrels. See below ('How to train your own model?') for more information how I trained the model. 
