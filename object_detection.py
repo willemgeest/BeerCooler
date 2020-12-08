@@ -81,13 +81,12 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
 
 
 def get_obj_det_model_Drive():
-    f_checkpoint = Path("./checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth")
+    f_checkpoint = Path(torch.hub.get_dir() +"\\checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth")
     if not f_checkpoint.exists():
         print('downloading obj det model')
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
             download_file_from_google_drive('1mJ_rRsGYDplNab-gkBeObEBspWGVNfg6', f_checkpoint)
 
-    #torch.hub.set_dir('.')
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
     return model
 
