@@ -17,6 +17,7 @@ class ResNet(nn.Module):
         model_name = "beerchallenge_resnet50_7brands.pth"
 
         # define the resnet 50
+        torch.hub.set_dir('.')
         self.resnet = resnet50(pretrained=True)
         num_ftrs = self.resnet.fc.in_features
         self.resnet.fc = nn.Linear(num_ftrs, len(class_names))

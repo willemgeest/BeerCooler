@@ -3,8 +3,10 @@ import torch
 import torchvision.transforms as transforms
 import torchvision
 
-def get_obj_det_model():
+def get_obj_det_model(local=False):
     # download or load the model from disk
+    if local:
+        torch.hub.set_dir('.')
     return torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
 
 def crop_beers(image, model, threshold, GPU=True):
