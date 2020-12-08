@@ -81,6 +81,8 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
 
 
 def get_obj_det_model_Drive():
+    save_dest = Path('checkpoints')
+    save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path(torch.hub.get_dir() +"\\checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth")
     if not f_checkpoint.exists():
         print('downloading obj det model')
