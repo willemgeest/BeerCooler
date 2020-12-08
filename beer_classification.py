@@ -5,9 +5,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms
+import torchvision
+from GD_download import download_file_from_google_drive
+import streamlit as st
+from pathlib import Path
+
 
 def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
+
+def get_class_model_Drive():
+    f_checkpoint = Path("./checkpoints/resnet50-19c8e357.pth")
+    if not f_checkpoint.exists():
+        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+            download_file_from_google_drive('1BhJaGO6ENvk5va8zVaSJsl8XFCVckCu6', f_checkpoint)
+
+    torch.hub.set_dir('.')
+    model = resnet50(pretrained=True)
+    return model
 
 class ResNet(nn.Module):
     def __init__(self):
@@ -18,7 +33,7 @@ class ResNet(nn.Module):
 
         # define the resnet 50
         torch.hub.set_dir('.')
-        self.resnet = resnet50(pretrained=True)
+        self.resnet = get_class_model_Drive()
         num_ftrs = self.resnet.fc.in_features
         self.resnet.fc = nn.Linear(num_ftrs, len(class_names))
         self.resnet.load_state_dict(torch.load(model_name))
