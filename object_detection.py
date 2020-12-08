@@ -2,6 +2,9 @@ import numpy as np
 import torch
 import torchvision.transforms as transforms
 import torchvision
+import streamlit as st
+from pathlib import Path
+from GD_download import download_file_from_google_drive
 
 def get_obj_det_model(local=False):
     # download or load the model from disk
@@ -75,4 +78,15 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
                pred_scores[relevant_outputs]
     else:
         return[[], [], [], []]
+
+
+def get_obj_det_model_Drive():
+    f_checkpoint = Path("./checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth")
+    if not f_checkpoint.exists():
+        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+            download_file_from_google_drive('1mJ_rRsGYDplNab-gkBeObEBspWGVNfg6', f_checkpoint)
+
+    torch.hub.set_dir('.')
+    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
+    return model
 
