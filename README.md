@@ -19,7 +19,6 @@ The repo consists of the following files:
 - beer_classification.py (some beer brand classification related functions)
 - train_beermodel.py (some functions to train your own beer model, not required for running the app, but it can be handy of you want to create your own beer model or want to add other beer brands)
 - requirements.txt (where the required packages can be found)
-- data folder (images where model was trained upon, not required for running the app)
 - latest_picture folder (where the latest processed picture (+ results) is stored)
 - logo folder (consists the logo's of the brands, just for visualization)
 - checkpoints (consists some other files, not really relevant for now)
@@ -28,11 +27,12 @@ The repo consists of the following files:
 
 Before diving into the details, let me explain how you can get started.
 
-1) Clone this repo, create a virtual environment and install dependencies
-2) Download the IP Webcam app on your phone (tested on Android). If active, this app streams your camera to your wifi network, so that's it becomes accessible for other devices within your wifi network. 
-3) In the IP Webcam app, press 'Start server' to start streaming your phone camera. Write down the (http, not https) IPv4 address (http://xxx.xxx.xxx.xxx:xxxx). 
-4) In cmd, activate your virtual environment, move to the correct folder and type 'streamlit run streamlit_camera.py http://xxx.xxx.xxx.xxx:xxxx'. Now, a web page should pop up with the app. 
-5) If you want to upload a picture (in stead of using your camera), you can forget step 2 and 3 and type 'streamlit run streamlit_upload.py'
+1) Clone this repo ```git lfs clone -b run-local https://github.com/willemgeest/BeerCooler.git``` (note the Git LFS because of the large file)
+2) Create a virtual environment and install dependencies
+3) Download the IP Webcam app on your phone (tested on Android). If active, this app streams your camera to your wifi network, so that's it becomes accessible for other devices within your wifi network. 
+4) In the IP Webcam app, press 'Start server' to start streaming your phone camera. Write down the (http, not https) IPv4 address (http://xxx.xxx.xxx.xxx:xxxx). 
+5) In cmd, activate your virtual environment, move to the correct folder and type 'streamlit run streamlit_camera.py http://xxx.xxx.xxx.xxx:xxxx'. Now, a web page should pop up with the app. 
+6) If you want to upload a picture (in stead of using your camera), you can forget step 3 and 4 and type 'streamlit run streamlit_upload.py'
 
 ## How does it work?
 
