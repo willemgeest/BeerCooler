@@ -5,6 +5,7 @@ import get_image
 import object_detection
 import beer_classification
 
+
 st.set_page_config(layout="wide")
 st.header("Willem's beer bottle classification algorithm")
 
@@ -23,7 +24,7 @@ if image is not None:
     st.image(image=get_image.resize_image(image=image, max_width=1200, max_heigth=600))
 
     #object detection
-    obj_det_model = object_detection.get_obj_det_model()
+    obj_det_model = object_detection.get_obj_det_model(local=True)
     try:
         image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=True)
     except:  # if GPU fails, try CPU
