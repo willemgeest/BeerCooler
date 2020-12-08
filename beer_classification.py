@@ -15,12 +15,11 @@ def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
 def get_class_model_Drive():
-    f_checkpoint = Path("./checkpoints/resnet50-19c8e357.pth")
+    f_checkpoint = Path(torch.hub.get_dir() + "./checkpoints/resnet50-19c8e357.pth")
     if not f_checkpoint.exists():
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
             download_file_from_google_drive('1BhJaGO6ENvk5va8zVaSJsl8XFCVckCu6', f_checkpoint)
 
-    torch.hub.set_dir('.')
     model = resnet50(pretrained=True)
     return model
 
