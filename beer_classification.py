@@ -15,6 +15,8 @@ def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
 def get_class_model_Drive():
+    save_dest = Path('checkpoints')
+    save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path(torch.hub.get_dir() + "./checkpoints/resnet50-19c8e357.pth")
     if not f_checkpoint.exists():
         with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
