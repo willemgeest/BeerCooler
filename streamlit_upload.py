@@ -11,9 +11,9 @@ st.header("Willem's beer bottle classification algorithm")
 
 # set parameters
 model_name = "beerchallenge_resnet50_7brands.pth"
-scored_image_location = 'latest_picture/latest_uploaded_photo_scored.jpg'
+scored_image_location = 'latest_uploaded_photo_scored.jpg'
 class_names = beer_classification.get_classes()
-img_location = 'latest_picture/latest_camera_photo.jpg'
+img_location = 'latest_camera_photo.jpg'
 
 # upload file
 image = st.file_uploader("Please upload your beer picture here")
@@ -31,11 +31,11 @@ if image is not None:
     #except:  # if GPU fails, try CPU
     image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=False)
 
-    if n_beers > 0:
-        image_scored.save(scored_image_location)
+    #if n_beers > 0:
+    #    image_scored.save(scored_image_location)
 
-        img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_uploaded_photo_scored.jpg',
-                                                                                    heatmap_location='.\\latest_picture\\heatmap_uploaded.jpg')
+        #img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_uploaded_photo_scored.jpg',
+        #                                                                            heatmap_location='.\\latest_picture\\heatmap_uploaded.jpg')
     # define 3 columns
     column1, column2, column3 = st.beta_columns(3)
 
