@@ -5,7 +5,7 @@ import get_image
 import object_detection
 import beer_classification
 import os
-
+import glob
 
 st.set_page_config(layout="wide", page_title="Beer bottle analyzing application")
 st.header('Beer bottle analyzing application')
@@ -114,4 +114,6 @@ if image is not None:
             else:
                 st.markdown("**Heatmap (no beers detected)**")
 
-os.rmdir('checkpoints')
+    files = glob.glob('checkpoints')
+    for f in files:
+        os.remove(f)
