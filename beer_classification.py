@@ -14,7 +14,7 @@ from pathlib import Path
 def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
-@st.cache(show_spinner=False)
+@st.cache(show_spinner=False, max_entries=10)
 def get_class_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
@@ -25,14 +25,13 @@ def get_class_model_Drive():
     model = resnet50(pretrained=True)
     return model
 
-@st.cache
+@st.cache(show_spinner=False, max_entries=10)
 def get_beerclass_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path("checkpoints/beerchallenge_resnet50_7brands.pth")
     if not f_checkpoint.exists():
-        with st.spinner("Downloading classification model... this may take a while! \n Don't stop it!"):
-            download_file_from_google_drive('1A9qhi2EpkfC9pAK_l9rWNWPMjwM4ZPVr', f_checkpoint)
+        download_file_from_google_drive('1A9qhi2EpkfC9pAK_l9rWNWPMjwM4ZPVr', f_checkpoint)
 
 class ResNet(nn.Module):
     def __init__(self):
