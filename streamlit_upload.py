@@ -27,6 +27,7 @@ if image is not None:
     image = Image.open(image)
     if device=='Phone' and image.size[0] > image.size[1]: # phone and landscape
         image = image.rotate(270)
+        image = get_image.resize_image(image=image, max_width=400, max_heigth=600)
     #st.markdown('**Original picture**')
     #st.image(image=get_image.resize_image(image=image, max_width=1200, max_heigth=600))
 
