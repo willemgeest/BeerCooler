@@ -14,7 +14,7 @@ from pathlib import Path
 def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
-@st.cache(show_spinner=False, max_entries=10)
+@st.cache(show_spinner=False)
 def get_class_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
@@ -25,7 +25,7 @@ def get_class_model_Drive():
     model = resnet50(pretrained=True)
     return model
 
-@st.cache(show_spinner=False, max_entries=10)
+@st.cache(show_spinner=False)
 def get_beerclass_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
