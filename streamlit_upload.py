@@ -40,7 +40,6 @@ if image is not None:
                 # plot original image
                 st.markdown('**Original image:**')
                 st.image(get_image.resize_image(image=image, max_width=400, max_heigth=600))
-
         else:
             st.markdown('**Original image:**')
             st.image(get_image.resize_image(image=image, max_width=400, max_heigth=600))
@@ -70,7 +69,7 @@ if image is not None:
                 st.markdown('**Detected beer bottle:**')
                 st.image(get_image.resize_image(image=image_scored, max_width=400, max_heigth=400))
             else:
-                st.markdown('**Detecting beer bottles (no beers detected)**')
+                st.markdown('**No beers detected)**')
 
         if n_beers > 0:
             # logo
@@ -96,8 +95,6 @@ if image is not None:
                                                 max_heigth=300))
                 st.markdown('**Probabilities:**')
                 st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
-            else:
-                st.markdown('**Predicting beer brands (no beers detected)**')
 
         if device == 'Laptop / pc':
             with column4:
@@ -112,7 +109,5 @@ if image is not None:
                 # heatmap
                 st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
                 st.image(get_image.resize_image(image=img_heatmap, max_width=400, max_heigth=400))
-            else:
-                st.markdown("**Heatmap (no beers detected)**")
 
-    shutil.rmtree('checkpoints')
+        shutil.rmtree('checkpoints')
