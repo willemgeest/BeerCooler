@@ -51,7 +51,7 @@ if image is not None:
         if n_beers>0:
             st.markdown('**Predicted beer brand:**')
     #        # logo
-            logo_location = 'logos/' + str(label) + '.png'
+            logo_location = 'logos/' + str(label.lower()) + '.png'
             st.image(get_image.resize_image(image=Image.open(logo_location).convert('RGB'), max_width=500, max_heigth=600))
     #
     #        # create df with probabilities
@@ -63,11 +63,11 @@ if image is not None:
         else:
             st.markdown('**Predicting beer brands (no beers detected)**')
 
-    #with column3:
-    #    if n_beers > 0:
+    with column3:
+        if n_beers > 0:
     #        # heatmap
-    #        st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
-    #        st.image(get_image.resize_image(image=img_heatmap, max_width=500, max_heigth=600))
-    #    else:
-    #        st.markdown("**Heatmap (no beers detected)**")
+            st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
+            st.image(get_image.resize_image(image=img_heatmap, max_width=500, max_heigth=600))
+        else:
+            st.markdown("**Heatmap (no beers detected)**")
 
