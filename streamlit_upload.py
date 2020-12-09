@@ -43,9 +43,11 @@ if image is not None:
         #try:
         #    image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=True)
         #except:  # if GPU fails, try CPU
-        image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=False)
+        image_scored, n_beers = object_detection.crop_beers(image=get_image.resize_image(image=image, max_width=400, max_heigth=400), 
+                                                            model=obj_det_model, threshold=0.8, GPU=False)
 
         if n_beers > 0:
+            get_image.resize_image(image=image_scored, max_width=400, max_heigth=400)
             image_scored.save(scored_image_location)
 
             img_heatmap, probabilities, label = beer_classification.beer_classification(img_location=scored_image_location,
