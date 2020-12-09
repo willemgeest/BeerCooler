@@ -17,7 +17,7 @@ class_names = beer_classification.get_classes()
 img_location = 'latest_camera_photo.jpg'
 
 # upload file
-image = st.file_uploader("Please upload your beer picture here")
+image = st.file_uploader("Please upload your beer picture here", type= ['jpeg', 'jpg'])
 
 if image is not None:
     image = Image.open(image)
