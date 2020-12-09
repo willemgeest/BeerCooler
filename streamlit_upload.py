@@ -26,10 +26,10 @@ if image is not None:
     #object detection
     #obj_det_model = object_detection.get_obj_det_model(local=True)
     obj_det_model = object_detection.get_obj_det_model_Drive()
-    try:
-        image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=True)
-    except:  # if GPU fails, try CPU
-        image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=False)
+    #try:
+    #    image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=True)
+    #except:  # if GPU fails, try CPU
+    image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=False)
 
     if n_beers > 0:
         image_scored.save(scored_image_location)
@@ -45,27 +45,27 @@ if image is not None:
             st.image(get_image.resize_image(image=image_scored, max_width=500, max_heigth=600 ))
         else:
             st.markdown('**Detecting beer bottles (no beers detected)**')
-    with column2:
-        if n_beers>0:
-            st.markdown('**Predicted beer brand:**')
-            # logo
-            logo_location = 'logos/' + str(label) + '.png'
-            st.image(get_image.resize_image(image=Image.open(logo_location).convert('RGB'), max_width=500, max_heigth=600))
+    #with column2:
+    #    if n_beers>0:
+    #        st.markdown('**Predicted beer brand:**')
+    #        # logo
+    #        logo_location = 'logos/' + str(label) + '.png'
+    #        st.image(get_image.resize_image(image=Image.open(logo_location).convert('RGB'), max_width=500, max_heigth=600))
+    #
+    #        # create df with probabilities
+    #        probabilities = probabilities.tolist()[0]
+    #        df = pd.DataFrame([round(num*100, 1) for num in probabilities], class_names)
+    #        df.columns = ['(%)']
+    #        st.markdown('**Probabilities:**')
+    #        st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
+    #    else:
+    #        st.markdown('**Predicting beer brands (no beers detected)**')
 
-            # create df with probabilities
-            probabilities = probabilities.tolist()[0]
-            df = pd.DataFrame([round(num*100, 1) for num in probabilities], class_names)
-            df.columns = ['(%)']
-            st.markdown('**Probabilities:**')
-            st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
-        else:
-            st.markdown('**Predicting beer brands (no beers detected)**')
-
-    with column3:
-        if n_beers > 0:
-            # heatmap
-            st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
-            st.image(get_image.resize_image(image=img_heatmap, max_width=500, max_heigth=600))
-        else:
-            st.markdown("**Heatmap (no beers detected)**")
+    #with column3:
+    #    if n_beers > 0:
+    #        # heatmap
+    #        st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
+    #        st.image(get_image.resize_image(image=img_heatmap, max_width=500, max_heigth=600))
+    #    else:
+    #        st.markdown("**Heatmap (no beers detected)**")
 
