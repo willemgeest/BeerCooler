@@ -110,4 +110,4 @@ if image is not None:
                 st.markdown("**Heatmap (what makes algorithm think it's " + str(label) + '?)**')
                 st.image(get_image.resize_image(image=img_heatmap, max_width=400, max_heigth=400))
 
-        shutil.rmtree('checkpoints')
+        #shutil.rmtree('checkpoints')
