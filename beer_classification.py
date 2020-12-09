@@ -19,8 +19,8 @@ def get_class_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path("checkpoints/resnet50-19c8e357.pth")
-    if not f_checkpoint.exists():
-        download_file_from_google_drive('1BhJaGO6ENvk5va8zVaSJsl8XFCVckCu6', f_checkpoint)
+    # if not f_checkpoint.exists():
+    download_file_from_google_drive('1BhJaGO6ENvk5va8zVaSJsl8XFCVckCu6', f_checkpoint)
 
     model = resnet50(pretrained=True)
     return model
@@ -30,8 +30,8 @@ def get_beerclass_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path("checkpoints/beerchallenge_resnet50_7brands.pth")
-    if not f_checkpoint.exists():
-        download_file_from_google_drive('1A9qhi2EpkfC9pAK_l9rWNWPMjwM4ZPVr', f_checkpoint)
+    # if not f_checkpoint.exists():
+    download_file_from_google_drive('1A9qhi2EpkfC9pAK_l9rWNWPMjwM4ZPVr', f_checkpoint)
 
 class ResNet(nn.Module):
     def __init__(self):
