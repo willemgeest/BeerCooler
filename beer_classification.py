@@ -14,7 +14,7 @@ from pathlib import Path
 def get_classes():
     return ['Amstel', 'Bavaria', 'Desperados', 'Grolsch', 'Heineken', 'Hertog Jan', 'Jupiler']
 
-@st.cache
+@st.cache(show_spinner=False)
 def get_class_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
