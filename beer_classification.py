@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision.models import resnet50
+import torch.nn.Module
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -26,19 +27,29 @@ def get_class_model_Drive():
     model = resnet50(pretrained=True)
     return model
 
+@st.cache
+def get_beerclass_model_Drive():
+    save_dest = Path('checkpoints')
+    save_dest.mkdir(exist_ok=True)
+    f_checkpoint = Path("checkpoints/beerchallenge_resnet50_7brands.pth")
+    if not f_checkpoint.exists():
+        with st.spinner("Downloading classification model... this may take a while! \n Don't stop it!"):
+            download_file_from_google_drive('1A9qhi2EpkfC9pAK_l9rWNWPMjwM4ZPVr', f_checkpoint)
+
 class ResNet(nn.Module):
     def __init__(self):
         super(ResNet, self).__init__()
 
         class_names = get_classes()
-        model_name = "beerchallenge_resnet50_7brands.pth"
+        #model_name = "beerchallenge_resnet50_7brands.pth"
 
         # define the resnet 50
         #torch.hub.set_dir('.')
         self.resnet = get_class_model_Drive()
         num_ftrs = self.resnet.fc.in_features
         self.resnet.fc = nn.Linear(num_ftrs, len(class_names))
-        self.resnet.load_state_dict(torch.load(model_name))
+        get_beerclass_model_Drive()
+        self.resnet.load_state_dict(torch.load(Path("checkpoints/beerchallenge_resnet50_7brands.pth")))
 
         # isolate the feature blocks
         self.features = nn.Sequential(self.resnet.conv1,
