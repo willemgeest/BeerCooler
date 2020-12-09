@@ -8,6 +8,8 @@ To let the barrel know what's in it, I've placed a Raspberri Pi with camera on t
 
 ![Example output](checkpoints/beerclassification_output.JPG)
 
+#### If you first want to see how it works before diving into the details, check out [this web app](https://share.streamlit.io/willemgeest/beercooler/webapp/streamlit_upload.py)
+
 ## Structure
 
 The repo consists of the following files:
