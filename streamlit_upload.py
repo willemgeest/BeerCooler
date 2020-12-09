@@ -33,7 +33,7 @@ if image is not None:
         with column1:
             # plot original image
             st.markdown('**Original image:**')
-            st.image(get_image.resize_image(image=image, max_width=400, max_heigth=600))
+            st.image(get_image.resize_image(image=image, max_width=400, max_heigth=400))
 
 
 
