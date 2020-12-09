@@ -11,9 +11,11 @@ st.header("Willem's beer bottle classification algorithm")
 
 # set parameters
 model_name = "beerchallenge_resnet50_7brands.pth"
-scored_image_location = 'latest_uploaded_photo_scored.jpg'
 class_names = beer_classification.get_classes()
+
+scored_image_location = 'latest_uploaded_photo_scored.jpg'
 img_location = 'latest_camera_photo.jpg'
+heatmap_location = 'heatmap_uploaded.jpg'
 
 # upload file
 image = st.file_uploader("Please upload your beer picture here")
@@ -31,11 +33,11 @@ if image is not None:
     #except:  # if GPU fails, try CPU
     image_scored, n_beers = object_detection.crop_beers(image=image, model=obj_det_model, threshold=0.8, GPU=False)
 
-    #if n_beers > 0:
-    #    image_scored.save(scored_image_location)
+    if n_beers > 0:
+        image_scored.save(scored_image_location)
 
-        #img_heatmap, probabilities, label = beer_classification.beer_classification(img_location='.\\latest_picture\\latest_uploaded_photo_scored.jpg',
-        #                                                                            heatmap_location='.\\latest_picture\\heatmap_uploaded.jpg')
+        img_heatmap, probabilities, label = beer_classification.beer_classification(img_location=scored_image_location,
+                                                                                    heatmap_location=heatmap_location)
     # define 3 columns
     column1, column2, column3 = st.beta_columns(3)
 
@@ -45,21 +47,21 @@ if image is not None:
             st.image(get_image.resize_image(image=image_scored, max_width=500, max_heigth=600 ))
         else:
             st.markdown('**Detecting beer bottles (no beers detected)**')
-    #with column2:
-    #    if n_beers>0:
-    #        st.markdown('**Predicted beer brand:**')
+    with column2:
+        if n_beers>0:
+            st.markdown('**Predicted beer brand:**')
     #        # logo
-    #        logo_location = 'logos/' + str(label) + '.png'
-    #        st.image(get_image.resize_image(image=Image.open(logo_location).convert('RGB'), max_width=500, max_heigth=600))
+            logo_location = 'logos/' + str(label) + '.png'
+            st.image(get_image.resize_image(image=Image.open(logo_location).convert('RGB'), max_width=500, max_heigth=600))
     #
     #        # create df with probabilities
-    #        probabilities = probabilities.tolist()[0]
-    #        df = pd.DataFrame([round(num*100, 1) for num in probabilities], class_names)
-    #        df.columns = ['(%)']
-    #        st.markdown('**Probabilities:**')
-    #        st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
-    #    else:
-    #        st.markdown('**Predicting beer brands (no beers detected)**')
+            probabilities = probabilities.tolist()[0]
+            df = pd.DataFrame([round(num*100, 1) for num in probabilities], class_names)
+            df.columns = ['(%)']
+            st.markdown('**Probabilities:**')
+            st.dataframe(df.style.format('{:7,.1f}').highlight_max(axis=0))
+        else:
+            st.markdown('**Predicting beer brands (no beers detected)**')
 
     #with column3:
     #    if n_beers > 0:
