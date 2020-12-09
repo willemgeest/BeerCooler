@@ -79,7 +79,7 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
     else:
         return[[], [], [], []]
 
-@st.cache(show_spinner=False)
+@st.cache(show_spinner=False, max_entries=10)
 def get_obj_det_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
