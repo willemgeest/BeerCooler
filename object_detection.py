@@ -79,15 +79,13 @@ def find_bottles(image, model, detection_threshold=0.8, GPU=True):
     else:
         return[[], [], [], []]
 
-@st.cache
+@st.cache(show_spinner=False)
 def get_obj_det_model_Drive():
     save_dest = Path('checkpoints')
     save_dest.mkdir(exist_ok=True)
     f_checkpoint = Path("checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth")
-    if not f_checkpoint.exists():
-        print('downloading obj det model')
-        with st.spinner("Downloading object detection model... this may take a while! \n Don't stop it!"):
-            download_file_from_google_drive('1mJ_rRsGYDplNab-gkBeObEBspWGVNfg6', f_checkpoint)
+    #if not f_checkpoint.exists():
+    download_file_from_google_drive('1mJ_rRsGYDplNab-gkBeObEBspWGVNfg6', f_checkpoint)
 
     model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True, min_size=800).eval()
     return model
