@@ -4,6 +4,7 @@ from PIL import Image
 import get_image
 import object_detection
 import beer_classification
+import GD_download
 
 st.set_page_config(layout="wide")
 st.header("Willem's beer bottle classification algorithm")
@@ -13,6 +14,9 @@ model_name = "beerchallenge_resnet50_7brands.pth"
 scored_image_location = 'latest_picture/latest_uploaded_photo_scored.jpg'
 class_names = beer_classification.get_classes()
 img_location = 'latest_picture/latest_camera_photo.jpg'
+
+#download beer classification model from Google Drive (if not already available)
+GD_download.get_beerclass_model_Drive(modelname=model_name)
 
 # upload file
 image = st.file_uploader("Please upload your beer picture here")
