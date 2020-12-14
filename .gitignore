@@ -1,0 +1,8 @@
+
+beerchallenge_resnet50_7brands.pth
+__pycache__/get_image.cpython-38.pyc
+*.pyc
+*.xml
+latest_picture/heatmap_uploaded.jpg
+latest_picture/latest_uploaded_photo_scored.jpg
+beerchallenge_resnet50_7brands.pth
