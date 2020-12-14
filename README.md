@@ -1,5 +1,7 @@
 # Turn your phone camera into an AI-beer device
 
+> [Try the web app!](https://share.streamlit.io/willemgeest/beercooler/webapp/streamlit_upload.py)
+
 As a data scientist, it is sometimes very hard to explain clearly to non-data-minded people what you do for living. I have friends who literally don't have a clue what I'm actually doing all day at the office. For those people, I'm working on a new project; a beer-cooling whisky barrel that is able to communicate with it's users about the beers that are in it. For example, when someone picks the last bottle out of the barrel, a siren should go off to trigger the host to refill the barrel with new beers. Ofcourse, a lot of other functions are possible too (an ambilight based on the beer brand, temperature checks, etc.). This way, I hope to let them understand what cool new possibilities become available due to new data science (Deep Learning) techniques. 
 
 ![Beer barrel](checkpoints/beer_barrel.jpg)
@@ -25,7 +27,8 @@ The repo consists of the following files:
 
 ## How to get started
 
-Before diving into the details, let me explain how you can get started.
+Before diving into the details, let me explain how you can get started. If you want to run the code on your own computer, follow these steps:
+(if you want to use the webapp, [click this link](https://share.streamlit.io/willemgeest/beercooler/webapp/streamlit_upload.py))
 
 1) Clone this repo ```git clone -b run-local --depth 1 https://github.com/willemgeest/BeerCooler.git```
 2) Create a virtual environment and install dependencies (as described in requirements.txt)
